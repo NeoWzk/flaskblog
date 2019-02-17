@@ -8,11 +8,11 @@
     </form>
 {% endmacro %}
 
-{#{% macro loginForm(form) %}#}
-{#    <form action="{{ url_for('auth.login') }}", method='POST'>#}
-{#        {{ form.hidden_tag() }}#}
-{#        {{ form.email() }}#}
-{#        {{ form.password() }}#}
-{#        {{ form.submit() }}#}
-{#    </form>#}
-{#{% endmacro %}#}
+{% macro loginForm(form) %}
+    <form action="{{ url_for('auth.sign_in') }}", method='POST'>
+        {{ form.hidden_tag() }}
+        {{ form.email(class='form-control', placeholder='Your registered email') }}
+        {{ form.password(class='form-control', placeholder='Password') }}
+        {{ form.submit(class='btn btn-primary btn-block') }}
+    </form>
+{% endmacro %}

@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% import 'macro/wtf.html' as wtf %}
+{% block main %}
+    <div class="signup-form">
+        <div class="container">
+            {{ wtf.loginForm(form) }}
+        </div>
+    </div>
+{% endblock %}
