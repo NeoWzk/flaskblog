@@ -2,6 +2,9 @@
 {% import 'macro/wtf.html' as wtf %}
 {% block main %}
     <div class="signup-form">
+        {% for msg in get_flashed_messages() %}
+            <span class="display-4 bg-danger">{{ msg }}</span>
+        {% endfor %}
         <div class="container">
             {{ wtf.signupForm(form) }}
         </div>

@@ -1,7 +1,7 @@
 # encoding:utf-8
 # create db models here
 
-from . import db,login_manager
+from . import db, login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 

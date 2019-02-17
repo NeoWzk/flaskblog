@@ -1,9 +1,30 @@
 {% macro signupForm(form) %}
-    <form action="{{ url_for('main.user_register') }}", method="POST">
+    <form action="{{ url_for('main.register') }}", method="POST">
         {{ form.hidden_tag() }}
+        {% if form.email.errors %}
+            {% for err in form.email.errors %}
+                <span class="bg-warning h3">{{ err }}</span>
+            {% endfor %}
+        {% endif %}
         {{ form.email(class='form-control', placeholder='Email Address') }}
+        {% if form.username.errors %}
+            {% for err in form.username.errors %}
+                <span class="bg-warning h3">{{ err }}</span>
+            {% endfor %}
+        {% endif %}
         {{ form.username(class='form-control', placeholder='Username') }}
+        {% if form.password.errors %}
+            {% for err in form.password.errors %}
+                <span class="bg-warning h3">{{ err }}</span>
+            {% endfor %}
+        {% endif %}
         {{ form.password(class='form-control', placeholder='Password') }}
+        {% if form.confirm.errors %}
+            {% for err in form.confirm.errors %}
+                <span class="bg-warning h3">{{ err }}</span>
+            {% endfor %}
+        {% endif %}
+        {{ form.confirm(class='form-control', placeholder='Password') }}
         {{ form.submit(class='btn btn-primary btn-block') }}
     </form>
 {% endmacro %}
@@ -11,7 +32,17 @@
 {% macro loginForm(form) %}
     <form action="{{ url_for('auth.sign_in') }}", method='POST'>
         {{ form.hidden_tag() }}
+        {% if form.email.errors %}
+            {% for err in form.email.errors %}
+                <span class="bg-warning h3">{{ err }}</span>
+            {% endfor %}
+        {% endif %}
         {{ form.email(class='form-control', placeholder='Your registered email') }}
+        {% if form.password.errors %}
+            {% for err in form.password.errors %}
+                <span class="bg-warning h3">{{ err }}</span>
+            {% endfor %}
+        {% endif %}
         {{ form.password(class='form-control', placeholder='Password') }}
         {{ form.submit(class='btn btn-primary btn-block') }}
     </form>
