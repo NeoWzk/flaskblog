@@ -3,16 +3,16 @@
 
 from flask import render_template, redirect, url_for, flash
 from ..main import main
-from app.forms import signupForm
+from ..forms import signupForm
 from app.models import User, db
 
 
-@main.route('/')
+@main.route('/', methods=['GET', 'POST'])
 def index():
     return render_template('index.html')
 
 
-@main.route('/register')
+@main.route('/register', methods=['GET', 'POST'])
 def user_register():
     form = signupForm()
     if form.validate_on_submit():
@@ -26,4 +26,5 @@ def user_register():
             user = User(username=form.username.data, email=form.email.data, password=form.password.data)
             db.session.add(user)
             db.session.commit()
+            return redirect(url_for('auth.sign_in'))
     return render_template('register.html', form=form)
