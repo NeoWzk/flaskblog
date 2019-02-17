@@ -7,6 +7,7 @@ import os
 class config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or os.urandom(16)
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
     MAIL_DEFAULT_SENDER = os.environ.get('MAILD_DEFAULT_SENDER')
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')

@@ -6,10 +6,10 @@ from . import create_app
 from flask import render_template
 from flask_mail import Message
 from threading import Thread
-from config import config
+import os
 
 
-app = create_app(config['default'])
+app = create_app(os.environ.get('FLASK_CONFIG') or 'default')
 
 
 def async_mail(app, msg):

@@ -1,0 +1,9 @@
+.signup-form {
+    width:100%;
+    max-width: 350px;
+    margin: 4.5rem auto 0 auto;
+}
+
+.signup-form input{
+    margin-bottom: 3%;
+}
