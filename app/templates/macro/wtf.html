@@ -1,0 +1,18 @@
+{% macro signupForm(form) %}
+    <form action="{{ url_for('main.user_register') }}", method="POST">
+        {{ form.hidden_tag() }}
+        {{ form.email() }}
+        {{ form.username() }}
+        {{ form.password() }}
+        {{ form.submit() }}
+    </form>
+{% endmacro %}
+
+{#{% macro loginForm(form) %}#}
+{#    <form action="{{ url_for('auth.login') }}", method='POST'>#}
+{#        {{ form.hidden_tag() }}#}
+{#        {{ form.email() }}#}
+{#        {{ form.password() }}#}
+{#        {{ form.submit() }}#}
+{#    </form>#}
+{#{% endmacro %}#}
