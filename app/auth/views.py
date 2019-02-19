@@ -44,10 +44,11 @@ def confirm(token):
         return redirect(url_for('main.index'))
     else:
         if current_user.confirm_token(token):
-            flash('Your details have been confirmed!')
+            flash('Congrats! Your Email Confirmed!')
+            login_user(current_user)
             return redirect(url_for('auth.dashboard'))
         else:
-            err = 'Token invalid or expired!'
+            err = 'Error:Token invalid or expired!'
             return render_template('errors/customerr.html', err=err)
 
 
@@ -75,6 +76,5 @@ def logout():
 @auth.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard():
-    login_user(current_user)
     return render_template('auth/dashboard.html')
 
