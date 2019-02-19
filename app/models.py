@@ -4,6 +4,8 @@
 from . import db, login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from itsdangerous import TimedJSONWebSignatureSerializer as serializer
+import os
 
 
 class User(UserMixin, db.Model):
@@ -12,6 +14,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), unique=True, nullable=False, index=True)
     email = db.Column(db.String(128), unique=True, nullable=False, index=True)
     password_hash = db.Column(db.String(128), nullable=False)
+    confirm = db.Column(db.Boolean, default=False)
 
     @property
     def password(self):
@@ -27,6 +30,28 @@ class User(UserMixin, db.Model):
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(user_id)
+
+    # function for generating token
+    def generate_confirm_token(self, expiration=3600):
+        s = serializer(os.environ.get('SECRET_KEY'), expires_in=expiration)
+        token = s.dumps({'confirm': self.id})
+        return token
+
+    # function for decode token and update table
+    def confirm_token(self, token):
+        s = serializer(os.environ.get('SECRET_KEY'))
+        try:
+            data = s.loads(token)
+        except :
+            return False
+
+        if data.get('confirm') != self.id:
+            return False
+        else:
+            self.confirm = True
+            db.session.add(self)
+            db.session.commit()
+            return True
 
     def __repf__(self):
         return 'User {}'.format(self.username)

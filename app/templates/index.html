@@ -2,5 +2,10 @@
 {% block main %}
     <div class="jumbotron">
         <span class="display-4">index page</span>
+        {% if get_flashed_messages() %}
+            {% for msg in get_flashed_messages() %}
+                <span>{{ msg }}</span>
+            {% endfor %}
+        {% endif %}
     </div>
 {% endblock %}
