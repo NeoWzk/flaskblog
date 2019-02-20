@@ -3,7 +3,13 @@
     <div class="container">
         <div class="row">
             <div class="jumbotron">
-                {{ err }}
+                <span class="bg-warning">
+                    {% if get_flashed_messages() %}
+                        {% for msg in get_flashed_messages() %}
+                            {{ msg }}
+                        {% endfor %}
+                    {% endif %}
+                </span>
             </div>
         </div>
     </div>

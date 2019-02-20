@@ -1,7 +1,7 @@
 # encoding: utf-8
 # define routes for authenticated url
 
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, request
 from app.forms import signupForm, loginForm
 from ..models import User
 from flask_login import login_required, login_user, logout_user, current_user
@@ -32,24 +32,24 @@ def user_register():
         token = user.generate_confirm_token(expiration=3600)
         send_mail('Please confirm your email asap!', user.email, 'confirm/user_confirm', user=user.username, token=token)
         send_mail('New User Just Joined', '2585414795@qq.com', 'mail/new_user', user=user.username)
-        flash('One more step needed! A confirmation mail has been sent to your email!')
+        flash('A confirmation email has been sent to your email')
+        return redirect(url_for('main.index'))
     return render_template('register.html', form=form)
 
 
 @auth.route('/confirm/<token>')
 @login_required
-def confirm(token):
-    if current_user.confirm:
-        flash('Your details already confirmed!')
+def email_confirmation(token):
+    if current_user.confirmed:
+        flash('Email already confirmed!')
         return redirect(url_for('main.index'))
     else:
         if current_user.confirm_token(token):
-            flash('Congrats! Your Email Confirmed!')
-            login_user(current_user)
-            return redirect(url_for('auth.dashboard'))
+            flash('Your email confirmed successfully!')
         else:
-            err = 'Error:Token invalid or expired!'
-            return render_template('errors/customerr.html', err=err)
+            flash('Invalid or expired token!')
+        return redirect(url_for('main.index'))
+
 
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -57,14 +57,13 @@ def sign_in():
     form = loginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user and user.verify_pass(form.password.data):
+        if user is not None and user.verify_pass(form.password.data):
             login_user(user)
-            return redirect(url_for('auth.dashboard'))
+            return redirect(request.args.get('next') or url_for('main.index'))
         else:
             flash('Invalid credentials')
-            return render_template('auth/login.html', form=form)
+            return redirect(url_for('auth.sign_in'))
     return render_template('auth/login.html', form=form)
-
 
 @auth.route('/logout', methods=['GET', 'POST'])
 @login_required
@@ -77,4 +76,20 @@ def logout():
 @login_required
 def dashboard():
     return render_template('auth/dashboard.html')
+
+
+# @auth.before_app_request
+# def before_request():
+#     if current_user.is_authenticated \
+#             and current_user.confirm is not True\
+#             and request.endpoint[:5] != 'auth.'\
+#             and request.endpoint != 'static':
+#         return redirect(url_for('auth.unconfirmed'))
+#
+#
+# @auth.route('/unconfirmed')
+# def unconfirmed():
+#     return render_template('unconfirmed.html')
+
+
 

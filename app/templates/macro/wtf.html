@@ -30,7 +30,7 @@
 {% endmacro %}
 
 {% macro loginForm(form) %}
-    <form action="{{ url_for('auth.sign_in') }}", method='POST'>
+    <form action="", method='POST'>
         {{ form.hidden_tag() }}
         {% if form.email.errors %}
             {% for err in form.email.errors %}

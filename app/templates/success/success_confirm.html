@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block main %}
+    <div class="container">
+        <div class="jumbotron">
+            <span class="bg-success">
+                {% if get_flashed_messages() %}
+                    {% for msg in get_flashed_messages() %}
+                        {{ msg }}
+                    {% endfor %}
+                {% endif %}
+            </span>
+        </div>
+    </div>
+{% endblock %}

@@ -8,6 +8,6 @@
 <h1>Email confirmation</h1>
 <h3>Hello {{ user }}:</h3>
 <p>It is very pleased to have you with us. To identify yourself in our system, please click the link below to confirm.</p>
-<h5>{{ url_for('auth.confirm', token=token, _external=True) }}</h5>
+<span>{{ url_for('auth.email_confirmation', token=token, _external=True) }}</span>
 </body>
 </html>

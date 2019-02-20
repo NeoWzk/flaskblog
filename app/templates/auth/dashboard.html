@@ -3,11 +3,13 @@
     <div class="jumbotron">
         <span class="display-4">dashboard</span>
     </div>
-    <div class="display-4">
-    {% if get_flashed_messages() %}
-        {% for msg in get_flashed_messages() %}
-            <span>{{ msg }}</span>
-        {% endfor %}
-    {% endif %}
+    <div class="container">
+        {% if get_flashed_messages() %}
+            {% for msg in get_flashed_messages() %}
+                <div class="display-4">
+                    {{ msg }}
+                </div>
+            {% endfor %}
+        {% endif %}
     </div>
 {% endblock %}

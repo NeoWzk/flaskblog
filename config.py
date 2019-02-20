@@ -5,7 +5,7 @@ import os
 
 
 class config:
-    SECRET_KEY = os.environ.get('SECRET_KEY') or os.urandom(16)
+    SECRET_KEY = os.urandom(24)
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     MAIL_SERVER = os.environ.get('MAIL_SERVER')
@@ -31,6 +31,7 @@ class testconfig(config):
 
 
 class production_config(config):
+    DEBUG = True
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{}:{}@{}:{}/{}'.format(os.environ.get('DB_USER'),
                                                                       os.environ.get('DB_PASS'),
                                                                       os.environ.get('DB_HOST'),

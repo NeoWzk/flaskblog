@@ -6,4 +6,11 @@
             {{ wtf.loginForm(form) }}
         </div>
     </div>
+    {% if get_flashed_messages() %}
+        {% for msg in get_flashed_messages() %}
+            <div class="bg-warning">
+                {{ msg }}
+            </div>
+        {% endfor %}
+    {% endif %}
 {% endblock %}
