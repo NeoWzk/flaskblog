@@ -1,8 +1,16 @@
 {% extends 'base.html' %}
 {% block main %}
-    <div class="jumbotron">
-        <span class="bg-danger">
-            unconfirmed
-        </span>
+    <div class="jumbotron bg-warning">
+        <h1 class="display-4">Warning Info:</h1>
+        <h2>Dear {{ current_user.username }},</h2>
+        <p>Seems you have not confirmed your email address. Please login your email account to confirm your email first.</p>
+        <p>if you have not received any confirmation email from us, please click the link below to resend confirm message.</p>
+        <span><a href="{{ url_for('auth.resend_confirm_msg', _external=True) }}">>>>>>>RESEND CONFIRMATION<<<<<<</a></span>
+        <p>Sincerely Admin</p>
     </div>
+    {% if get_flashed_messages() %}
+        {% for msg in get_flashed_messages() %}
+            <span>{{ msg }}</span>
+        {% endfor %}
+    {% endif %}
 {% endblock %}

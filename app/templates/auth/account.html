@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% import 'macro/wtf.html' as wtf %}
+{% block main %}
+    <div class="container-fluid my-dashboard">
+        <div class="row">
+            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ url_for('auth.account') }}">
+                                <span data-feather="home"></span>
+                                Account Home<span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('auth.edit_profile') }}">
+                                <span data-feather="edit"></span>
+                                Edit profile
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="users"></span>
+                                Members
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="info"></span>
+                                Credentials
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">My Account</h1>
+                </div>
+                <div class="container my-dashboard">
+                    <div class="row">
+                        {% if get_flashed_messages() %}
+                            {% for msg in get_flashed_messages() %}
+                                <span class="alert alert-block alert-success">{{ msg }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <span class="h5">Username:</span>
+                        </div>
+                        <div class="col-lg-8">
+                            {{ data.email }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <span class="h5">Email:</span>
+                        </div>
+                        <div class="col-lg-8">
+                            {{ data.username }}
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    {{ super() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script></body>
+{% endblock %}

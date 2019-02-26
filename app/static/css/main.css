@@ -7,3 +7,11 @@
 .signup-form input{
     margin-bottom: 3%;
 }
+
+.my-dashboard {
+    margin-top:4.5rem;
+}
+
+.my-dashboard input{
+    margin-bottom:2%;
+}
